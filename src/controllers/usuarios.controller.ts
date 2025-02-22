@@ -79,7 +79,7 @@ async crearinstitucion(
 
       const urlWhatsapp = ConfiguracionSeguridad.urlWhatsappMensaje; // URL del servicio de WhatsApp
       let datosWhatsapp = {
-        message: `${data.nombres} .🎉🙌🏼`, // Mensaje de felicitación
+        message: `${data.nombres}  bienvenida a la red de amigos BCC 🥳, es muy grato contar con su presencia, un abrazo gigante  lleno de gratitud y aprecio 🫂`, // Mensaje de felicitación
         number: "57"+data.whatsapp // Número
       };
       console.log(datosWhatsapp);
