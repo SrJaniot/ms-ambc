@@ -3,7 +3,7 @@
 import { inject, service } from "@loopback/core";
 import { DefaultCrudRepository, juggler } from "@loopback/repository";
 import { GenericModel, ModelInsertUsuario } from "../models";
-import { getModelSchemaRef, post, requestBody, response } from "@loopback/rest";
+import { get, getModelSchemaRef, param, post, requestBody, response } from "@loopback/rest";
 import { SQLConfig } from "../config/sql.config";
 import { ConfiguracionSeguridad } from "../config/configuracion.seguridad";
 import { WhatsappApiService } from "../services";
@@ -94,10 +94,102 @@ async crearinstitucion(
   }catch(error){
     return {
       "CODIGO": 500,
-      "MENSAJE": "Error al insertar datos  del TORNEO en la funcion de postgres ERROR POSTGRES",
+      "MENSAJE": "Error al insertar datos  del USUARIO en la funcion de postgres ERROR POSTGRES",
       "DATOS": error
     };
   }
+}
+
+
+
+
+
+
+ //METODO GET PARA OBTENER DATOS DE LA TABLA DEPARTAMENTO USANDO EL REPOSITORIO GENERICO NO PIDO PARAMETROS
+ @get('/ObtenerDepartamento')
+ @response(200, {
+   description: 'Obtener Departamento',
+   content:{
+     'application/json':{
+       schema: getModelSchemaRef(GenericModel),
+     },
+   },
+ })
+ async obtenerProgramasEstudio():Promise<object>{
+   try{
+     //const sql =SQLConfig.crearContexto;
+     // EN ESTE CASO ESTA FUNCION RETORNA UN JSON DESDE POSTGRES
+     const sql = SQLConfig.ObtenerDepartamento;
+     const result = await this.genericRepository.dataSource.execute(sql);
+     // FUN_OBTENER_DPTOS()  fun_obtener_dptos
+     if(result[0].fun_obtener_dptos.CODIGO !=200){
+       return {
+         "CODIGO": result[0].fun_obtener_dptos.CODIGO,
+         "MENSAJE": result[0].fun_obtener_dptos.MENSAJE,
+         "DATOS": null
+       };
+     }
+     return {
+       "CODIGO": result[0].fun_obtener_dptos.CODIGO,
+       "MENSAJE": result[0].fun_obtener_dptos.MENSAJE,
+       "DATOS": result[0].fun_obtener_dptos.DATOS
+     };
+
+
+   }catch(error){
+     return {
+       "CODIGO": 500,
+       "MENSAJE": "Error POSTGRES",
+       "DATOS": error
+     };
+   }
+ }
+
+
+
+ @get('/ObtenerCiudades/{id_departamento}')
+@response(200, {
+ description: 'Obtener programa ciudad por id departamento',
+ content:{
+   'application/json':{
+     schema: getModelSchemaRef(GenericModel),
+   },
+ },
+})
+async obtenerProgramaEstudioID(
+ @param.path.number('id_departamento') id_departamento: number,
+):Promise<object>{
+ try{
+   //const sql =SQLConfig.crearContexto;
+   // EN ESTE CASO ESTA FUNCION RETORNA UN JSON DESDE POSTGRES
+   const sql = SQLConfig.ObtenerCiudad;
+   const params =[
+    id_departamento
+   ];
+   //console.log(sql);
+   //console.log(params);
+   const result = await this.genericRepository.dataSource.execute(sql, params);
+   //console.log(result[0]);
+   //FUN_OBTENER_CIUDADES() fun_obtener_ciudades()
+   if(result[0].fun_obtener_ciudades.CODIGO !=200){
+     return {
+       "CODIGO": result[0].fun_obtener_ciudades.CODIGO,
+       "MENSAJE": result[0].fun_obtener_ciudades.MENSAJE,
+       "DATOS": null
+     };
+   }
+   return {
+     "CODIGO": result[0].fun_obtener_ciudades.CODIGO,
+     "MENSAJE": result[0].fun_obtener_ciudades.MENSAJE,
+     "DATOS": result[0].fun_obtener_ciudades.DATOS
+   };
+ }catch(error){
+   return {
+     "CODIGO": 500,
+     "MENSAJE": "Error POSTGRES",
+     "DATOS": error
+   };
+ }
 }
 
 
