@@ -1,6 +1,6 @@
 import {injectable, /* inject, */ BindingScope} from '@loopback/core';
-import fetch from 'node-fetch';
-//npm install node-fetch
+const fetch = require('node-fetch');
+//npm install  npm i node-fetch@2.7.0
 @injectable({scope: BindingScope.TRANSIENT})
 export class WhatsappApiService {
   constructor(/* Add @inject to inject parameters */) {}
@@ -9,6 +9,8 @@ export class WhatsappApiService {
    * Add service methods here
    */
   async EnviarMensajeWhatsapp(datos: any, url: string): Promise<void> {
+	  console.log(datos);
+	  console.log(url);
     try {
       const response = await fetch(url, {
         method: 'post',

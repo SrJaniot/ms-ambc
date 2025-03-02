@@ -30,8 +30,8 @@ if (require.main === module) {
       },
       // Enable HTTPS  sudo certbot certonly --standalone -d coco.casinosoft.com.co
       //protocol: 'https',
-      //key: fs.readFileSync('/etc/letsencrypt/live/amigoscelis.casinosoft.com.co/privkey.pem'),
-      //cert: fs.readFileSync('/etc/letsencrypt/live/amigoscelis.casinosoft.com.co/fullchain.pem'),
+      //key: fs.readFileSync('/etc/letsencrypt/live/cocoform.gestionpolitica.com/privkey.pem'),
+      //cert: fs.readFileSync('/etc/letsencrypt/live/cocoform.gestionpolitica.com/fullchain.pem'),
     },
   };
   main(config).catch(err => {
